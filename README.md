@@ -1,7 +1,7 @@
 # sense-hat.ixi
 An Iota ICT IXI module to display TXs on Raspberry SensHat led pannel
 
-#Hardware
+# Hardware
 You will need a Raspberry (3B / 3B+) and the SensHat connected on top of it..
 
 # Build
