@@ -1,0 +1,9 @@
+{
+  "name": "Raspberry.ixi",
+  "version": "0.4",
+  "main_class": "com.ixidev.RaspberryIxi",
+  "description": "This module allows you to ...",
+  "repository": "ixidev/Raspberry.ixi",
+  "gui_port": -1,
+  "supported_versions": ["0.4-SNAPSHOT", "0.4"]
+}
