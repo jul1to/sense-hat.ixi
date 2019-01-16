@@ -1,9 +1,9 @@
 {
-  "name": "Raspberry.ixi",
+  "name": "sense-hat.ixi",
   "version": "0.4",
   "main_class": "com.ixidev.RaspberryIxi",
-  "description": "This module allows you to ...",
-  "repository": "ixidev/Raspberry.ixi",
+  "description": "This module allows you to display LED on Raspberry SenseHat",
+  "repository": "jul1to/sense-hat.ixi",
   "gui_port": -1,
-  "supported_versions": ["0.4-SNAPSHOT", "0.4"]
+  "supported_versions": ["0.4"]
 }

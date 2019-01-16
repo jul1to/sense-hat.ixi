@@ -1,43 +1,59 @@
 package com.ixidev;
 
+import de.larsgrefer.sense_hat.SenseHat;
+import de.larsgrefer.sense_hat.SenseHatColor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.iota.ict.ixi.Ixi;
 import org.iota.ict.ixi.IxiModule;
 import org.iota.ict.network.event.GossipEvent;
 import org.iota.ict.network.event.GossipListener;
-import rpi.sensehat.api.SenseHat;
-import rpi.sensehat.api.dto.Color;
 
+import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RaspberryIxi extends IxiModule {
 
     private final static Logger LOGGER = LogManager.getLogger(RaspberryIxi.class);
 
+    private SenseHat senseHat;
+
     @Override
     public void run() {
 
-        this.ixi.addGossipListener(new GossipListener() {
-            @Override
-            public void onGossipEvent(GossipEvent gossipEvent) {
-                LOGGER.debug("New event received");
+        //SenseHat library initialisation
+        try {
+            senseHat = new SenseHat();
+        } catch (IOException exception) {
+            senseHat = null;
+            LOGGER.error("No sense-hat device connected");
+        }
 
-                SenseHat senseHat = new SenseHat();
-                //Clear leds
-                senseHat.ledMatrix.clear();
+        if (senseHat != null) {
 
-                //Display random LED
-                int x =  ThreadLocalRandom.current().nextInt(0,8);
-                int y =  ThreadLocalRandom.current().nextInt(0,8);
+            this.ixi.addGossipListener(new GossipListener() {
+                @Override
+                public void onGossipEvent(GossipEvent gossipEvent) {
+                    try {
+                        //Clear leds
+                        senseHat.fill(SenseHatColor.BLACK);
 
-                senseHat.ledMatrix.setPixel(x, y, Color.GREEN);
-            }
-        });
+                        //Display random Green LED
+                        int x = ThreadLocalRandom.current().nextInt(0, 8);
+                        int y = ThreadLocalRandom.current().nextInt(0, 8);
 
+                        senseHat.setPixel(x, y, SenseHatColor.GREEN);
+
+                    } catch (IOException exception) {
+                        LOGGER.error("No sense-hat device connected");
+                    }
+                }
+            });
+        }
     }
 
     public RaspberryIxi(final Ixi ixi) {
         super(ixi);
+
     }
 }
